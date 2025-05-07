@@ -79,6 +79,4 @@ class User
     {
         $this->updatedAt = new \DateTimeImmutable();
     }
-
-
 }
