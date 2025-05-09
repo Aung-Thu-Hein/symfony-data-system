@@ -15,4 +15,15 @@ class PostRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Post::class);
     }
+
+    public function getPostWithComments(int $id): ?Post
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.comments', 'c')
+            ->addSelect('c')
+            ->where('p.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
