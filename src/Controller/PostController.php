@@ -14,7 +14,7 @@ final class PostController extends AbstractController
     public function index(int $id, PostRepository $postRepository)
     {
         $post = $postRepository->getPostWithComments($id);
-        dd($post->getComments());
+        dd($post->getComments()[0]);
     }
 
     #[Route('/post/create', name: 'post_create', methods: ['GET'])]
