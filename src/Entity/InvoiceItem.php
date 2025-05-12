@@ -4,11 +4,17 @@ namespace App\Entity;
 
 use App\Repository\InvoiceItemRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: InvoiceItemRepository::class)]
 #[ORM\Table(name: 'invoices_items')]
+#[Gedmo\SoftDeleteable(fieldName: 'deletedAt')]
 class InvoiceItem
 {
+    use TimestampableEntity, SoftDeleteableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
