@@ -11,11 +11,17 @@ use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[Entity(repositoryClass: PostRepository::class)]
 #[Table(name: 'posts')]
+#[Gedmo\SoftDeleteable]
 class Post
 {
+    use TimestampableEntity, SoftDeleteableEntity;
+
     #[Id, GeneratedValue]
     #[Column]
     private ?int $id = null;
@@ -27,7 +33,7 @@ class Post
     private string $content;
 
     #[OneToMany(targetEntity: Comment::class, mappedBy: 'post', orphanRemoval: true, cascade: ['persist', 'remove'])]
-    private Collection $comments;
+    private ?Collection $comments = null;
 
     public function __construct()
     {
